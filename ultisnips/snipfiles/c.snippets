@@ -1,0 +1,115 @@
+#================================= #预处理 #================================= # #include <...>
+snippet inc
+#include "${1:`Filename("$1.h")`}"${2}
+# #include <...>
+snippet INC
+#include <${1:TODO}>${2} #================================= #结构语句 #================================= # return
+snippet re
+      return (${1:/* condition */});
+# If Condition
+snippet if
+      if (${1:/* condition */}) {
+${2:TODO} }
+snippet ei
+      else if (${1:/* condition */}) {
+${2:TODO} }
+￼￼￼￼snippet el
+      else {
+${1:TODO} }
+# Do While Loop
+snippet do
+      do {
+            ${2:TODO}
+      } while (${1:/* condition */});
+# While Loop
+snippet wh
+      while (${1:/* condition */}) {
+${2:TODO} }
+# switch
+snippet sw
+      switch (${1:/* condition */}) {
+            case ${2:c}:
+{
+${3:TODO}
+} break;
+            default:
+                   TODO
+}
+# 通过迭代器遍历容器(可读写) snippet for
+      for (auto ${2:iter} = ${1:c}.begin(); ${3:$2} != $1.end(); ${4:++iter}) {
+            ${5:TODO}
+}
+# 通过迭代器遍历容器(只读) snippet cfor
+      for (auto ${2:citer} = ${1:c}.cbegin(); ${3:$2} != $1.cend(); ${4:+
++citer}) {
+${5:TODO} }
+# 通过下标遍历容器
+￼
+￼￼￼￼snippet For
+      for (auto ${2:i} = 0; $2 != ${1}.size(); ${3:++}$2) {
+${4:TODO} }
+# C++11风格for循环遍历(可读写) snippet F
+for (auto e : ${1:c}) { TODO
+}
+# C++11风格for循环遍历(只读) snippet CF
+for (const auto e : ${1:c}) { TODO
+}
+# For Loop
+snippet FOR
+      for (int ${2:i} = 0; $2 < ${1:count}; ${3:++}$2) {
+${4:TODO} }
+# try-catch snippet try try {
+TODO
+} catch (${1:/* condition */}) {
+TODO }
+#================================= #容器 #================================= # std::vector
+snippet vec
+vector<${1:char}> v${2};
+# std::list
+snippet lst
+      list<${1:char}>
+# std::set
+snippet set
+      set<${1:key}>
+l${2};
+s${2};
+￼
+￼￼￼￼# std::map
+snippet map
+map<${1:key}, ${2:value}> #================================= #语言扩展 #================================= # Class
+snippet cl
+m${3};
+};
+# Function
+class ${1:`Filename('$1_t', 'name')`} { public:
+      $1 (${2:arguments});
+      virtual ~$1 ();
+private:
+      ${3:/* data */}
+snippet fun
+      ${1:void} ${2:function_name}(${3}) {
+${4:TODO} }
+# Function Declaration
+snippet fund
+${1:void} ${2:function_name}(${3});${4} #================================= #结对符及特殊符合 #=================================
+# 括号 bracket snippet b
+(${1})${2}
+# 方括号 square bracket
+snippet sb
+      [${1}]${2}
+# 大括号 brace snippet br
+{
+${1}
+}${2}
+￼
+￼
+# 单引号 single quotes snippet sq
+'${1}'${2} # 双引号 quotes
+snippet q
+      "${1}"${2}
+# 中文括号 kuo hao snippet kh
+(${1})${2} # 中文双引号 yin hao
+snippet yh “${1}”${2}
+# 指针间接访问 p->m snippet .
+      ->${1}${2}
+# ================================

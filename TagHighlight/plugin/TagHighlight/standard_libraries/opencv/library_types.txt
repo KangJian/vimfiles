@@ -1,0 +1,4 @@
+LibraryName:C++ Standard Library
+TypesFiles:opencv_c.taghl
+TypesSuffixes:c
+CheckMode:Always
