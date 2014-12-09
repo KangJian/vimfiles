@@ -46,9 +46,6 @@ let $LANG = 'en_US'
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-" set the default fonts and size
-set guifont=Droid_Sans_Mono:h10:cANSI
-
 " about the TAB and indent
 set shiftwidth=4
 set tabstop=4
@@ -66,12 +63,12 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " autoset the work focus at the editor buffer
-autocmd VimEnter * NERDTree
-wincmd w
-autocmd VimEnter * wincmd w
+"autocmd VimEnter * NERDTree
+"wincmd w
+"autocmd VimEnter * wincmd w
 
 " ----------- >YouCompleteMe
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif        
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif        
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jc :YcmCompleter GoToDefinition<CR>
 "let g:ycm_confirm_extra_conf=0    "打开vim时不再询问是否加载ycm_extra_conf.py配置
@@ -100,9 +97,9 @@ inoremap { {}<ESC>i
 if has('gui_running')
 
 	set cursorline
-"	set fu
-"	set guifont=Droid_Sans_Mono:h14
-"	colorscheme bandit 
+	set fu
+	set guifont=Monaco:h13
+	colorscheme bandit 
 else
 	colorscheme desert
 endif
