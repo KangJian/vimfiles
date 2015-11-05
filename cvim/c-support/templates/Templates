@@ -8,7 +8,7 @@ SetMacro( 'COMPANY',     'Vision Tech' )
 SetMacro( 'COPYRIGHT',   '' )
 SetMacro( 'EMAIL',       'thekangjian@163.com' )
 SetMacro( 'LICENSE',     '' )
-SetMacro( 'ORGANIZATION','' )
+SetMacro( 'ORGANIZATION','Vision Tech 维盛泰科' )
 
 SetStyle( 'C' )
 

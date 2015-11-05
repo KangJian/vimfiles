@@ -663,7 +663,7 @@ endfunction    " ----------  end of function C_Input ----------
 function! C_AdjustLineEndComm ( ) range
 	"
 	" comment character (for use in regular expression)
-	let cc = '\%(/\*\|//\)'                       " start of C or C++ comment
+	let cc = '\%(/\*\|//\)'                        "start of C or C++ comment
 	"
 	" patterns to ignore when adjusting line-end comments (maybe incomplete):
 	" - double-quoted strings, includes \n \" \\ ...
