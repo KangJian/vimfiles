@@ -90,12 +90,12 @@ void |?FUNCTION_NAME|()
 == ENDTEMPLATE ==
 
 == LIST: comments_c_sections == hash ==
-  'HEADER FILE INCLUDES'        : 'HEADER FILE INCLUDES   ###############################', 
-  'LOCAL MACROS'                : 'MACROS  -  LOCAL TO THIS SOURCE FILE   ###############', 
-  'LOCAL TYPE DEFINITIONS'      : 'TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   #####', 
-  'LOCAL DATA TYPES'            : 'DATA TYPES  -  LOCAL TO THIS SOURCE FILE   ###########', 
-  'LOCAL VARIABLES'             : 'VARIABLES  -  LOCAL TO THIS SOURCE FILE   ############', 
-  'LOCAL PROTOTYPES'            : 'PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ###########', 
+  'HEADER FILE INCLUDES'        : 'MTYPE DEFINITIONS  -  LOCAL TOFILE      ', 
+  'LOCAL MACROS'                : 'MTYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE       ', 
+  'LOCAL TYPE DEFINITIONS'      : 'TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE				 ', 
+  'LOCAL DATA TYPES'            : 'DATA TYPES  -  LOCAL TO THIS SOURCE FILE							#', 
+  'LOCAL VARIABLES'             : 'VARIABLES  -  LOCAL TO THIS SOURCE FILE							 ', 
+  'LOCAL PROTOTYPES'            : 'PROTOTYPES  -  LOCAL TO THIS SOURCE FILE							 ', 
   'EXP.  FUNCTION DEFINITIONS'  : 'FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ########', 
   'LOCAL FUNCTION DEFINITIONS'  : 'FUNCTION DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   #', 
   'LOCAL CLASS DEFINITIONS'     : 'CLASS DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ####', 
@@ -138,7 +138,10 @@ void |?FUNCTION_NAME|()
 
 == Comments.C file sections  == expandmenu, append, map:ccs, shortcut:s ==
 |PickList( 'C file sections', 'comments_c_sections' )|
-/* #####   |PICK|#################### */<CURSOR>
+//--------------------------------------------------------------------------------------
+//									|PICK|
+//--------------------------------------------------------------------------------------
+<CURSOR>
 == Comments.H file sections  == expandmenu, append, map:chs, shortcut:s ==
 |PickList( 'H file sections', 'comments_h_sections' )|
 /* #####   |PICK|######################################## */<CURSOR>
