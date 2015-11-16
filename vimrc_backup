@@ -1,0 +1,291 @@
+"about Pathogen
+execute pathogen#infect()
+
+"about auto EX mode set wildmenu
+set wildmode=full
+set history=300
+
+"about tags
+set tags+=D:/Vim/LibTag/opencv
+
+"about highlight search result and reconstruct window&buffer
+set hlsearch
+set incsearch
+nnoremap <silent> <C-l> : <C-u>nohlsearch<CR><C-l>
+
+noremap n nzz
+noremap N Nzz
+
+"来自Vim Practise - 可以正向，反向查找在Visual模式下所选择的文本字符区域
+xnoremap * : <C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # : <C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+	let @s = temp
+endfunction
+
+"set the colorscheme
+"au GUIEnter * simalt ~x
+set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"filetype indent
+filetype plugin indent on
+
+"set <leader>
+"let mapleader=','
+
+"Line Number
+set nu
+
+"C/C++ syntax
+syntax on
+set t_Co=256
+set background=dark
+
+" set the backspace ,so it can delete indent,CR,space..etc on Windows System
+set backspace=indent,eol,start
+
+nmap <leader>ge $
+nmap <leader>gb 0
+
+" high light the C/C++ or other files
+syntax on							
+set nu								
+set langmenu=en_US.UTF-8			
+set encoding=utf-8					
+let $LANG = 'en_US'
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+" about the TAB and indent
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set smartindent
+
+" ------------ >NERDTree
+
+" ===================================================
+" automatically open NERDTree when vim start
+autocmd vimenter * NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" automatically close vim when the NERDTree is the only window left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" autoset the work focus at the editor buffer
+autocmd VimEnter * NERDTree
+wincmd w
+autocmd VimEnter * wincmd w
+
+
+
+" ----------- >YouCompleteMe
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif        
+nnoremap <F1> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>jc :YcmCompleter GoToDefinition<CR>
+let g:ycm_confirm_extra_conf=0    "打开vim时不再询问是否加载ycm_extra_conf.py配置
+let g:ycm_enable_diagnostic_signs=0 "不对当前文档进行语法检测
+let g:ycm_collect_identifiers_from_tags_files = 0  "collect complete indentifiers from tag files (Ctags)
+
+" ----------- >Tagbar
+let g:tagbar_show_linenumbers = 1
+autocmd BufEnter * nested :call tagbar#autoopen(0)
+
+" ----------- >UltiSnips
+let g:UltiSnipsExpandTrigger="<c-i>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/ultisnips/snipfiles/"]
+
+" 括号自动补全
+"inoremap ( ()<ESC>i
+"inoremap [ []<ESC>i
+inoremap { {}<ESC>i
+"inoremap < <><ESC>i
+"inoremap " ""<ESC>i
+
+" GUI Setting
+if has('gui_running')
+
+	set cursorline
+	"set fu
+	set guifont=Monaco:h13
+	colorscheme bandit 
+else
+	colorscheme desert
+endif
+
+" Vi auto commentary
+autocmd FileType apache set commentstring=#\ %s
+
+" about Power Line
+set laststatus=2
+
+" about Open File On Command Line
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+" about Ctags
+map <C-F12> :!ctags -R .<CR><CR>"
+
+" C-support VIM
+let g:C_LineEndCommColDefault    = 60
+
+"----------------------------------
+"----------------------------------
+"----------Tag HighLight-----------
+"----------------------------------
+"----------------------------------
+
+" TagHighlightSettings Variable definition
+if !exists('g:TagHighlightSettings') 
+	let g:TagHighlightSettings = {} 
+endif 
+
+" about the project Config File
+let g:TagHighlightSettings['DoNotGenerateTags'] = 1
+let g:TagHighlightSettings['DefaultDirModePriority'] = ["Explicit"]
+let g:TagHighlightSettings['TagFileDirModePriority'] = ["Explicit"]
+let g:TagHighlightSettings['TypesFileDirModePriority'] = ["Explicit"]
+
+let g:TagHighlightSettings['TagFileDirectory'] = "./.tag_high"
+let g:TagHighlightSettings['TypesFileDirectory'] = "./.tag_high"
+
+"----------------------------------
+"----------------------------------
+"----------    Ctags    -----------
+"----------------------------------
+"----------------------------------
+
+" set extra tag's location
+set tags=.tag_high/tags
+
+" set a VIM custom command for generate tag file
+command CCthis !ctags --tag-relative=yes -f ./.tag_high/tags -R *
+command CPlusthis !ctags --tag-relative=yes -f ./.tag_high/tags -R --c++-kinds=+p --fields=+iaS --extra=+ *
+
+"----------------------------------
+"----------------------------------
+"----------    Cscope   -----------
+"----------------------------------
+"----------------------------------
+
+"保证QuickFix窗口在最低端
+command Ql q * wincmd l
+autocmd FileType qf wincmd J
+
+"一键更新当前Cscope数据库
+nmap <C-F11> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > ./.tag_high/cscope.files<CR>
+  \:cs kill -1<CR>
+  \:!cscope -b -i ./.tag_high/cscope.files -f ./.tag_high/cscope.out<CR>
+  \:cs kill -1<CR>:cs add ./.tag_high/cscope.out<CR>
+  \:CPlusthis<CR>
+  \:UpdateTypesFile<CR>
+nmap <C-F12> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > ./.tag_high/cscope.files<CR>
+  \:cs kill -1<CR>
+  \:CCthis<CR>
+  \:UpdateTypesFile<CR>
+"autocmd BufWritePost * call system("find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > ./.tag_high/cscope.files<CR>
+  "\:cs kill -1<CR>
+  "\:!cscope -b -i ./.tag_high/cscope.files -f ./.tag_high/cscope.out<CR>
+  "\:cs kill -1<CR>:cs add ./.tag_high/cscope.out<CR>
+  "\:CCthis<CR>
+  "\:UpdateTypesFile<CR>")
+
+"通过与窗口移动命令绑定 实现了Cscope的Preview功能
+nmap <silent> <F3> <CR>:wincmd j<CR>
+nmap <silent> <F4> <CR>:cclose <CR>
+
+"启动时自动加载Cscope数据库
+if has("cscope")
+	set csprg=/usr/local/bin/cscope
+	set csto=1
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("./.tag_high/cscope.out")
+		cs add ./.tag_high/cscope.out
+	endif
+	set csverb
+endif
+
+command Cclose : cclose <CR>
+			\:wincmd l<CR>
+
+"绑定各种Cscope搜索模式的快捷键
+nmap <F2> :cs find s <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+			\:wincmd j<CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+			\:wincmd j<CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+			\:wincmd j<CR>
+nmap <C-F2> :cs find t <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+			\:cw<CR>
+nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+			\:cw<CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+			\:cw<CR>
+
+"使用QuickFix显示Cscope的结果
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+"DoxygenToolkit相关设置
+let g:DoxygenToolkit_paramTag_pre="Param	:	"
+let g:DoxygenToolkit_returnTag="Return	:	"
+let g:DoxygenToolkit_blockHeader="----------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------"
+let g:DoxygenToolkit_authorName="Kang Jian"
+let g:DoxygenToolkit_briefTag_funcName="yes"
+let g:DoxygenToolkit_commentType="C++"
+let g:DoxygenToolkit_paramTag_post=" - "
+
+"关于Python自动添加
+let g:python_author = 'Kang Jian'               
+let g:python_email  = 'thekangjian@163.com'   
+
+function InsertPythonComment()
+	exe 'normal'.1.'G'
+	let line = getline('.')
+	if line =~ '^#!.*$' || line =~ '^#.*coding:.*$'
+		return
+	endif
+	normal O
+	call setline('.', '#!/usr/bin/env python')
+	normal o
+	call setline('.', '# -*- coding:utf-8 -*-')
+	normal o
+	call setline('.', '#')
+	normal o
+	call setline('.', '# Author  :   '.g:python_author)
+	normal o
+	call setline('.', '# E-mail  :   '.g:python_email)
+	normal o
+	call setline('.', '# Date    :   '.strftime("%y/%m/%d %H:%M:%S"))
+	normal o
+	call setline('.', '# Desc    :   ')
+	normal o
+	call setline('.', '#')
+	normal o
+	call cursor(7, 17)
+endfunction
+function InsertCommentWhenOpen()
+	if a:lastline == 1 && !getline('.')
+		call InsertPythonComment()
+	end
+endfunc
+au FileType python :%call InsertCommentWhenOpen()
+au FileType python map <F4> :call InsertPythonComment()<cr>
+
+
+"根据当前时间插入版本号
+:nnoremap <F9> "=strftime(" %m%e.%H%M")<CR>gP
